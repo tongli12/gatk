@@ -14,10 +14,14 @@ if [[ -z ${GATK_DIR+x} || -z ${CLUSTER_NAME+x} || -z ${MASTER_NODE+x} || -z ${PR
     PROJECT_OUTPUT_DIR="$MASTER_NODE"/"$OUTPUT_DIR"
 fi
 
-REFERENCE_LOCATION="$MASTER_NODE"/reference/Homo_sapiens_assembly19.fasta
-TWOBIT_REFERENCE_LOCATION="$MASTER_NODE"/reference/Homo_sapiens_assembly19.2bit
-echo "Assuming reference: " "$REFERENCE_LOCATION"
-echo "Assuming 2-bit reference: " "$TWOBIT_REFERENCE_LOCATION"
+if [[ -z ${REFERENCE_LOCATION+x} ]]; then
+    REFERENCE_LOCATION="$MASTER_NODE"/reference/Homo_sapiens_assembly38.fasta
+    echo "reference: " "$REFERENCE_LOCATION"
+fi
+if [[ -z ${TWOBIT_REFERENCE_LOCATION+x} ]]; then
+    TWOBIT_REFERENCE_LOCATION="$MASTER_NODE"/reference/Homo_sapiens_assembly38.2bit
+    echo "2-bit reference: " "$REFERENCE_LOCATION"
+fi
 
 cd "$GATK_DIR" 
 

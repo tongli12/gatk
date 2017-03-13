@@ -14,13 +14,18 @@ if [[ -z ${GATK_DIR+x} || -z ${CLUSTER_NAME+x} || -z ${MASTER_NODE+x} || -z ${PR
     PROJECT_OUTPUT_DIR="$MASTER_NODE"/"$OUTPUT_DIR"
 fi
 
-REFERENCE_LOCATION="$MASTER_NODE"/reference/Homo_sapiens_assembly19.fasta
-INPUT_BAM="$MASTER_NODE"/data/NA12878_PCR-_30X.bam
-SKIP_INTERVAL_LIST="$MASTER_NODE"/reference/GRCh37.kill.intervals
-
-echo "Assuming reference: " "$REFERENCE_LOCATION"
-echo "Assuming input bam: " "$INPUT_BAM"
-echo "Assuming reference skip list: " "$SKIP_INTERVAL_LIST"
+if [[ -z ${REFERENCE_LOCATION+x} ]]; then
+    REFERENCE_LOCATION="$MASTER_NODE"/reference/Homo_sapiens_assembly38.fasta
+    echo "reference: " "$REFERENCE_LOCATION"
+fi
+if [[ -z ${SKIP_INTERVAL_LIST+x} ]]; then
+    SKIP_INTERVAL_LIST="$MASTER_NODE"/reference/GRCh38.kill.intervals
+    echo "reference skip list: " "$SKIP_INTERVAL_LIST"
+fi
+if [[ -z ${INPUT_BAM+x} ]]; then
+    INPUT_BAM="$MASTER_NODE"/data/NA12878_PCR-_30X.bam
+    echo "input bam: " "$INPUT_BAM"
+fi
 
 cd "$GATK_DIR" 
 
@@ -41,5 +46,6 @@ cd "$GATK_DIR"
     --cluster "$CLUSTER_NAME" \
     --num-executors 20 \
     --driver-memory 30G \
-    --executor-memory 30G \
-    --conf spark.yarn.executor.memoryOverhead=5000
+    --executor-memory 40G \
+    --conf spark.yarn.executor.memoryOverhead=5000 \
+    --conf spark.rpc.askTimeout=600s
