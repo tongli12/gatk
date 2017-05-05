@@ -29,6 +29,9 @@ public final class SortReadFileSpark extends GATKSparkTool {
     @Argument(doc="the output file path", shortName = StandardArgumentDefinitions.OUTPUT_SHORT_NAME, fullName = StandardArgumentDefinitions.OUTPUT_LONG_NAME, optional = false)
     protected String outputFile;
 
+    @Argument(shortName = StandardArgumentDefinitions.SORT_ORDER_SHORT_NAME, doc = "Sort order of output file", optional = true)
+    public SAMFileHeader.SortOrder SORT_ORDER = SAMFileHeader.SortOrder.coordinate;
+
     @Override
     public List<ReadFilter> getDefaultReadFilters() {
         return Collections.singletonList(ReadFilterLibrary.ALLOW_ALL_READS);
@@ -51,7 +54,7 @@ public final class SortReadFileSpark extends GATKSparkTool {
         } else {
             sortedReads = reads; // sorting is done by writeReads below
         }
-        readsHeader.setSortOrder(SAMFileHeader.SortOrder.coordinate);
+        readsHeader.setSortOrder(SORT_ORDER);
         writeReads(ctx, outputFile, sortedReads);
     }
 }
