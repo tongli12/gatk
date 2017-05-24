@@ -35,9 +35,8 @@ import java.util.function.Function;
  * downstream analyses.</p>
  *
  * <p>The user specifies one or more
- * fields to print with the -F NAME, each of which appears as a single column in
- * the output file, with a header named NAME, and the value of this field in the VCF
- * one per line.  NAME can be any standard VCF column (CHROM, ID, QUAL) or any annotation name
+ * fields to print with -F, each of which appears as a single column in
+ * the output file.  Field can be any standard VCF column (CHROM, ID, QUAL) or any annotation name
  * in the INFO field (AC=10).  In addition, there are specially supported values like
  * EVENTLENGTH (length of the event), TRANSITION (for SNPs), HET (count of het genotypes),
  * HOM-REF (count of homozygous reference genotypes), HOM-VAR (count of homozygous variant
@@ -63,9 +62,9 @@ import java.util.function.Function;
  * <pre>
  *     ./gatk-launch \
  *     VariantsToTable \
- *     -V file.vcf \
+ *     -V input.vcf \
  *     -F CHROM -F POS -F ID -F QUAL -F AC \
- *     -o results.table
+ *     -o output.table
  * </pre>
  * <p>would produce a file that looks like:</p>
  * <pre>
