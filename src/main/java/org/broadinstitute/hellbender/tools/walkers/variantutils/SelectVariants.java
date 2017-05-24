@@ -84,6 +84,16 @@ import java.util.stream.Collectors;
  * A new VCF file containing the selected subset of variants.
  * </p>
  *
+ * * <h3>Usage example</h3>
+ * <pre>
+ *     ./gatk-launch \
+ *     SelectVariants \
+ *     -R reference.fasta \
+ *     -V input.vcf \
+ *     -selectType SNP \
+ *     -o output.vcf
+ * </pre>
+ *
  */
 @CommandLineProgramProperties(
         summary = "Select variant calls based on sample names, patterns, etc.",
