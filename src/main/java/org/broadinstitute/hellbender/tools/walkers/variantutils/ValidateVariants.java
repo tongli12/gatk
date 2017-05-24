@@ -50,7 +50,7 @@ import java.util.*;
  *
  * <h3>Input</h3>
  * <p>
- * A variant set to validate using <code>-V</code> or <code>--variant</code> as shown below.
+ * A VCF to validate using <code>-V</code> or <code>--variant</code> as shown below.
  * </p>
  *
  * <h3>Examples</h3>
@@ -58,31 +58,31 @@ import java.util.*;
  * <p>To perform VCF format and all strict validations: </p>
  *
  * <pre>
- * java -Xmx2g -jar GenomeAnalysisTK.jar \
+ *   ./gatk-launch \
+ *   ValidateVariants \
  *   -R ref.fasta \
- *   -T ValidateVariants \
- *   --variant input.vcf \
+ *   -V input.vcf \
  *   --dbsnp dbsnp.vcf
  * </pre>
  *
  * <p>To perform only VCF format tests:</p>
  *
  * <pre>
- * java -Xmx2g -jar GenomeAnalysisTK.jar \
+ *   ./gatk-launch\
+ *   ValidateVariants
  *   -R ref.fasta \
- *   -T ValidateVariants \
+ *   -V input.vcf
  *   <b>--validationTypeToExclude ALL</b> \
- *   --variant input.vcf
  * </pre>
  *
  * <p>To perform all validations except the strict <i>ALLELE</i> validation:</p>
  *
  * <pre>
- * java -Xmx2g -jar GenomeAnalysisTK.jar \
+ *   ./gatk-launch \
+ *   ValidateVariants \
  *   -R ref.fasta \
- *   -T ValidateVariants \
+ *   -V input.vcf \
  *   <b>--validationTypeToExclude ALLELES</b>
- *   --variant input.vcf \
  *   --dbsnp dbsnp.vcf
  * </pre>
  *
