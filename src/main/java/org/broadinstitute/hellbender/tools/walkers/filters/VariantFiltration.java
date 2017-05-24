@@ -34,7 +34,7 @@ import static java.util.Collections.singleton;
  *
  * <h3>Input</h3>
  * <p>
- * A variant set to filter.
+ * A VCF to filter.
  * </p>
  *
  * <h3>Output</h3>
@@ -44,15 +44,13 @@ import static java.util.Collections.singleton;
  *
  * <h3>Usage example</h3>
  * <pre>
- * java -jar GenomeAnalysisTK.jar \
+ *   ./gatk-launch \
  *   -T VariantFiltration \
  *   -R reference.fasta \
+ *   -V input.vcf \
  *   -o output.vcf \
- *   --variant input.vcf \
  *   --filterExpression "AB < 0.2 || MQ0 > 50" \
- *   --filterName "Nov09filters" \
- *   --mask mask.vcf \
- *   --maskName InDel
+ *   --filterName "my_filters" \
  * </pre>
  *
  */
