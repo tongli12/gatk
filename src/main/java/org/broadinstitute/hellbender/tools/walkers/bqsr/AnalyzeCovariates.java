@@ -83,22 +83,22 @@ import java.util.Optional;
  *
  * <h4>Plot a single recalibration table</h4>
  * <pre>
- * java -jar GenomeAnalysisTK.jar \
- *      -T AnalyzeCovariates \
- *      -R myrefernce.fasta \
- *      -bqsr myrecal.table \
- *      -plots BQSR.pdf
+ *      ./gatk-launch \
+ *      AnalyzeCovariates \
+ *      -R reference.fasta \
+ *      -bqsr recal1.table \
+ *      -plots AnalyzeCovariates.pdf
  * </pre>
  *
  * <h4>Plot before (first pass) and after (second pass) recalibration table to compare them</h4>
  *
  * <pre>
- * java -jar GenomeAnalysisTK.jar \
- *      -T AnalyzeCovariates \
- *      -R myrefernce.fasta \
- *      -before recal2.table \
- *      -after recal3.table \
- *      -plots recalQC.pdf
+ *      ./gatk-launch \
+ *      AnalyzeCovariates \
+ *      -R reference.fasta \
+ *      -before recal1.table \
+ *      -after recal2.table \
+ *      -plots AnalyzeCovariates.pdf
  * </pre>
  *
  * <h4>Plot up to three recalibration tables for comparison</h4>
@@ -108,48 +108,47 @@ import java.util.Optional;
  * # You can ignore the before/after semantics completely if you like (if you do add -ignoreLMT
  * # to avoid a possible warning), but all tables should have been generated using the same parameters.
  *
- * java -jar GenomeAnalysisTK.jar \
- *      -T AnalyzeCovariates \
- *      -R myrefernce.fasta \
+ *      ./gatk-launch \
+ *      AnalyzeCovariates \
+ *      -R reference.fasta \
  *      -ignoreLMT \
  *      -bqsr recal1.table \   # you can discard any two
  *      -before recal2.table \
  *      -after recal3.table \
- *      -plots myrecals.pdf
+ *      -plots AnalyzeCovariates.pdf
  * </pre>
  *
  * <h4>Full BQSR quality assessment pipeline</h4>
  *
  * <pre>
  * # Generate the first pass recalibration table file.
- * java -jar GenomeAnalysisTK.jar \
- *      -T BaseRecalibrator \
- *      -R myreference.fasta \
- *      -I myinput.bam \
- *      -knownSites bundle/my-trusted-snps.vcf \ # optional but recommendable
- *      -knownSites bundle/my-trusted-indels.vcf \ # optional but recommendable
- *      ... other options
- *      -o firstpass.table
+ *      ./gatk-launch \
+ *      BaseRecalibrator \
+ *      -R reference.fasta \
+ *      -I input.bam \
+ *      -knownSites my-trusted-snps.vcf \ # optional but recommendable
+ *      -knownSites my-trusted-indels.vcf \ # optional but recommendable
+ *      -o recal1.table
  *
  * # Generate the second pass recalibration table file.
- * java -jar GenomeAnalysisTK.jar \
- *      -T BaseRecalibrator \
- *      -bqsr firstpass.table \
- *      -R myreference.fasta \
- *      -I myinput.bam \
+ *      ./gatk-launch \
+ *      BaseRecalibrator \
+ *      -R reference.fasta \
+ *      -I input.bam \
+ *      -bqsr recal1.table \
  *      -knownSites bundle/my-trusted-snps.vcf \
  *      -knownSites bundle/my-trusted-indels.vcf \
  *      ... other options \
- *      -o secondpass.table
+ *      -o recal2.table
  *
  * # Finally generate the plots and also keep a copy of the csv (optional).
- * java -jar GenomeAnalysisTK.jar \
- *      -T AnalyzeCovariates \
- *      -R myrefernce.fasta \
- *      -before firstpass.table \
- *      -after secondpass.table \
+ *      ./gatk-launch \
+ *      AnalyzeCovariates \
+ *      -R reference.fasta \
+ *      -before recal1.table \
+ *      -after recal2.table \
  *      -csv BQSR.csv \ # optional
- *      -plots BQSR.pdf
+ *      -plots AnalyzeCovariates.pdf
  * </pre>
  *
  */
