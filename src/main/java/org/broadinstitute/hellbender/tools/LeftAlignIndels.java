@@ -13,29 +13,29 @@ import org.broadinstitute.hellbender.utils.read.*;
 import java.io.File;
 
 /**
- * Left-aligns indels from reads in a bam file.
+ * Left-aligns indels from reads in a BAM file.
  *
  * <p>
- * LeftAlignIndels is a tool that takes a bam file and left-aligns any indels inside it.  The same indel can often be
+ * LeftAlignIndels is a tool that takes a BAM file and left-aligns any indels inside it.  The same indel can often be
  * placed at multiple positions and still represent the same haplotype.  While a standard convention is to place an
- * indel at the left-most position this doesn't always happen, so this tool can be used to left-align them.
+ * indel at the left-most position, this doesn't always happen, so this tool can be used to left-align them.
  *
  * <h3>Input</h3>
  * <p>
- * A bam file to left-align.
+ * A BAM file to left-align.
  * </p>
  *
  * <h3>Output</h3>
  * <p>
- * A left-aligned bam.
+ * A left-aligned BAM.
  * </p>
  *
  * <h3>Examples</h3>
  * <pre>
- * java -Xmx3g -jar GenomeAnalysisTK.jar \
- *   -T LeftAlignIndels \
+ * ./gatk-launch LeftAlignIndels \
+ *   -R reference.fasta \
  *   -I input.bam \
- *   -o output.vcf
+ *   -O output.bam
  * </pre>
  *
  */
