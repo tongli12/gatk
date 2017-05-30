@@ -53,11 +53,11 @@ import java.util.*;
  *
  * <p>
  * The purpose of variant recalibration is to assign a well-calibrated probability to each variant call in a call set.
- * You can then create highly accurate call sets by filtering based on this single estimate for the accuracy of each call.
- * The approach taken by variant quality score recalibration is to develop a continuous, covarying estimate of the relationship
- * between SNP call annotations (such as QD, MQ, and ReadPosRankSum, for example) and the probability that a SNP is a true genetic
+ * By filtering on those probabilities, you can create highly accurate call sets.
+ * VariantRecalibrator develops a continuous, covarying estimate of the relationship
+ * between variant annotations (such as QD, MQ, and ReadPosRankSum, for example) and the probability that a variant is a true genetic
  * variant versus a sequencing or data processing artifact. This model is determined adaptively based on "true sites" provided
- * as input, typically HapMap 3 sites and those sites found to be polymorphic on the Omni 2.5M SNP chip array (in humans). This
+ * as input, typically HapMap sites and those sites found to be polymorphic on the Omni 2.5M SNP chip array (in humans). This
  * adaptive error model can then be applied to both known and novel variation discovered in the call set of interest to evaluate
  * the probability that each call is real. The score that gets added to the INFO field of each variant is called the VQSLOD. It is
  * the log odds of being a true variant versus being false under the trained Gaussian mixture model.
@@ -65,7 +65,7 @@ import java.util.*;
  *
  * <p>
  * This tool performs the first pass in a two-stage process called VQSR; the second pass is performed by the
- * <a href='https://www.broadinstitute.org/gatk/guide/tooldocs/org_broadinstitute_gatk_tools_walkers_variantrecalibration_ApplyRecalibration.php'>ApplyRecalibration</a> tool.
+ * <a href='INSERTAPPLYVQSRTOOLDOCHERE'>ApplyVQSR</a> tool.
  * In brief, the first pass consists of creating a Gaussian mixture model by looking at the distribution of annotation
  * values over a high quality subset of the input call set, and then scoring all input variants according to the model.
  * The second pass consists of filtering variants based on score cutoffs identified in the first pass.
@@ -75,7 +75,7 @@ import java.util.*;
  * <a href='https://www.broadinstitute.org/gatk/guide/article?id=39'>method documentation</a>,
  * <a href='https://www.broadinstitute.org/gatk/guide/article?id=1259'>parameter recommendations</a> and
  * <a href='https://www.broadinstitute.org/gatk/guide/article?id=2805'>tutorial</a> to really understand what these
- * tools and how to use them for best results on your own data.</p>
+ * tools do and how to use them for best results on your own data.</p>
  *
  * <h3>Inputs</h3>
  * <ul>
@@ -88,16 +88,16 @@ import java.util.*;
  *
  * <h3>Output</h3>
  * <ul>
- * <li>A recalibration table file that will be used by the ApplyRecalibration tool.</li>
+ * <li>A recalibration table file that will be used by the ApplyVQSR tool.</li>
  * <li>A tranches file which shows various metrics of the recalibration callset for slices of the data.</li>
  * </ul>
  *
  * <h3>Usage example</h3>
  * <p>Recalibrating SNPs in exome data:</p>
  * <pre>
- * ./gatk-launch JAVA_OPTS=-Xmx4g \
- *   VariantRecalibrator \
- *   --variant raw_variants.vcf \
+ * ./gatk-launch VariantRecalibrator \
+ *   -R reference.fasta
+ *   -V input.vcf \
  *   --resource hapmap,known=false,training=true,truth=true,prior=15.0 hapmap_3.3.b37.sites.vcf \
  *   --resource omni,known=false,training=true,truth=false,prior=12.0 1000G_omni2.5.b37.sites.vcf \
  *   --resource 1000G,known=false,training=true,truth=false,prior=10.0 1000G_phase1.snps.high_confidence.vcf
@@ -111,9 +111,9 @@ import java.util.*;
  *
  * <h3>Allele-specfic usage</h3>
  * <pre>
- * ./gatk-launch JAVA_OPTS=-Xmx4g \
- *   VariantRecalibrator \
- *   --variant raw_variants.withASannotations.vcf \
+ * ./gatk-launch VariantRecalibrator \
+ *   -R reference.fasta
+ *   -V input.vcf \
  *   -AS \
  *   --resource hapmap,known=false,training=true,truth=true,prior=15.0:hapmap_3.3.b37.sites.vcf \
  *   --resource omni,known=false,training=true,truth=false,prior=12.0:1000G_omni2.5.b37.sites.vcf \
@@ -122,7 +122,7 @@ import java.util.*;
  *   -an QD -an MQ -an MQRankSum -an ReadPosRankSum -an FS -an SOR -an InbreedingCoeff \
  *   -mode SNP \
  *   --recalFile output.AS.recal \
- *   -tranchesFile output.AS.tranches \
+ *   --tranchesFile output.AS.tranches \
  *   --rscriptFile output.plots.AS.R
  * </pre>
  * The input VCF must have been produced using allele-specific annotations in HaplotypeCaller.
@@ -137,7 +137,7 @@ import java.util.*;
  * <li>The values used in the example above are only meant to show how the command lines are composed.
  * They are not meant to be taken as specific recommendations of values to use in your own work, and they may be
  * different from the values cited elsewhere in our documentation. For the latest and greatest recommendations on
- * how to set parameter values for you own analyses, please read the Best Practices section of the documentation,
+ * how to set parameter values for your own analyses, please read the Best Practices section of the documentation,
  * especially the <a href='https://www.broadinstitute.org/gatk/guide/article?id=1259'>FAQ document</a> on VQSR parameters.</li>
  * <li>Whole genomes and exomes take slightly different parameters, so make sure you adapt your commands accordingly! See
  * the documents linked above for details.</li>
