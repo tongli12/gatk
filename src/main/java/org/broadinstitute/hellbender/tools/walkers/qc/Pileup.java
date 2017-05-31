@@ -26,13 +26,13 @@ import java.util.stream.Collectors;
  *
  * <p>This tool emulates the 'samtools pileup' command. It prints the alignment in a format that is very similar to the
  * Samtools pileup format (see the <a href="http://samtools.sourceforge.net/pileup.shtml">Pileup format
- * documentation</a> for more details about the original format). There is one line per genomic position, listing the
+ * documentation</a> for more details about the original format). There is one column per genomic position, listing the
  * chromosome name, coordinate, reference base, read bases, and read qualities. In addition to these default fields,
  * additional information can be added to the output as extra columns; see options detailed below.</p>
  *
  * <h4>Emulated command:</h4>
  * <pre>
- *  samtools pileup -f in.ref.fasta -l in.site_list input.bam
+ *  samtools pileup -f reference.fasta -l intervals.site_list input.bam
  * </pre>
  *
  * <h3>Input</h3> <p> A BAM file and the interval to print. </p>
@@ -41,9 +41,9 @@ import java.util.stream.Collectors;
  *
  * <h3>Usage example</h3>
  * <pre>
- * ./gatk-launch Pileup  \\
+ * ./gatk-launch Pileup  \
  *   -R reference.fasta \
- *   -I my_reads.bam \
+ *   -I input.bam \
  *   -L chr1:257-267
  *   -O output.txt
  * </pre>
