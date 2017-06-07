@@ -26,17 +26,15 @@ import java.io.File;
 import java.util.*;
 
 /**
- * Perform joint genotyping on gVCF files produced by HaplotypeCaller
+ * Perform joint genotyping on GVCF files produced by HaplotypeCaller
  *
  * <p>
- * GenotypeGVCFs merges gVCF records that were produced as part of the Best Practices workflow for variant discovery
- * (see Best Practices documentation for more details) using the '-ERC GVCF' or '-ERC BP_RESOLUTION' mode of the
- * HaplotypeCaller, or result from combining such gVCF files using CombineGVCFs. This tool will produce correct genotype
- * likelihoods, re-genotype the newly merged record, and then re-annotate it.</p>
+ * GenotypeGVCFs merges GVCFs that were produced by HaplotypeCaller with `-ERC GVCF` or `-ERC BP_RESOLUTION`. This tool uses the genotype likelihoods in the single-sample GVCFs to produce correct
+ * genotype calls for the entire cohort.
  *
  * <h3>Input</h3>
  * <p>
- * One HaplotypeCaller gVCF to genotype
+ * GVCFs produced with `-ERC` in HaplotypeCaller to genotype
  * </p>
  *
  * <h3>Output</h3>
@@ -46,15 +44,17 @@ import java.util.*;
  *
  * <h3>Usage example</h3>
  * <pre>
- * gatk-launch GenotypeGVCFs \
+ * ./gatk-launch GenotypeGVCFs \
  *   -R reference.fasta \
- *   -V sample1.g.vcf \
+ *   -V input1.g.vcf \
+ *   -V input2.g.vcf \
+ *   -V input3.g.vcf
  *   -O output.vcf
  * </pre>
  *
  * <h3>Caveat</h3>
- * <p>Only gVCF files produced by HaplotypeCaller (or CombineGVCFs) can be used as input for this tool. Some other
- * programs produce files that they call gVCFs but those lack some important information (accurate genotype likelihoods
+ * <p>Only GVCF files produced by HaplotypeCaller (or CombineGVCFs) can be used as input for this tool. Some other
+ * programs produce files that they call GVCFs but those lack some important information (accurate genotype likelihoods
  * for every position) that GenotypeGVCFs requires for its operation.</p>
  *
  * <h3>Special note on ploidy</h3>
