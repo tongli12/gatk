@@ -4,7 +4,7 @@ set -e
 script_path=$( cd "$(dirname "${BASH_SOURCE}")" ; pwd -P )
 cd "$script_path"
 
-ln -fs /home/travis/build/broadinstitute/gatk/scripts/cnv_wdl/cnv_somatic_tasks.wdl
+ln -fs /home/travis/build/broadinstitute/gatk/scripts/cnv_wdl/cnv_common_tasks.wdl
 ln -fs /home/travis/build/broadinstitute/gatk/scripts/cnv_wdl/somatic/cnv_somatic_copy_ratio_bam_workflow.wdl
 ln -fs /home/travis/build/broadinstitute/gatk/scripts/cnv_wdl/somatic/cnv_somatic_allele_fraction_pair_workflow.wdl
 
